@@ -20,6 +20,9 @@ class Frame:
 
     def pushed_grid(self,i,j):
         def tmp():
+            self.buttons[i][j].destroy()
+            self.buttons[i][j] = tkinter.Button(self.main_win,text='0', relief='sunken')
+            self.buttons[i][j].place(x=20*i+100, y=20*j+100, width=20, height=20)
             print("pushed " + str(i) + str(j))
         return tmp
 
