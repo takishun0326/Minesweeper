@@ -3,8 +3,8 @@ from tkinter import ttk
 
 from Frame import Frame
 
-WIDTH = 500
-HEIGHT = 500
+WIDTH = 400
+HEIGHT = 400
 
 
 

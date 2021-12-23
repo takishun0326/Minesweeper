@@ -5,8 +5,8 @@ from tkinter import ttk
 from Game import Game
 from functools import partial 
 
-WIDTH = 500
-HEIGHT = 500
+WIDTH = 450
+HEIGHT = 400
 
 class Frame:
     def __init__(self, main_win):
@@ -16,7 +16,7 @@ class Frame:
         self.flgs = []
         self.bombs = []
 
-        self.frame = tkinter.Frame(main_win, width=500, height=500)
+        self.frame = tkinter.Frame(main_win, width=450, height=500)
         self.frame.pack()
 
         self.widgets()
@@ -63,7 +63,7 @@ class Frame:
                     bomb_img = tkinter.PhotoImage(file = 'Bomb.png')
 
                     # 爆弾をすべて掘り起こす
-                    for i in range(15):
+                    for i in range(20):
                         for j in range(15):
                             self.game.map_visit[i][j] = 1
                             if self.game.map[i][j] == -1:
@@ -81,7 +81,7 @@ class Frame:
     # widgets 準備
     def widgets(self):
         self.buttons = []
-        for i in range(15):
+        for i in range(20):
             button = []
             for j in range(15):
                 # ボタンの設定
@@ -94,6 +94,6 @@ class Frame:
 
     # widgets 配置
     def position(self):
-        for i in range(15):
+        for i in range(20):
             for j in range(15):
                 self.buttons[i][j].place(x=20*i, y=20*j+100, width=20, height=20)
