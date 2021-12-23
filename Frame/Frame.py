@@ -38,9 +38,12 @@ class Frame:
     def put_flg(self,event):
         # gameがスタートしているか
         if self.game.is_gamestart:
-            flg_img = tkinter.PhotoImage(file = 'Flag.png')
-            self.flgs.append(flg_img.subsample(30, 30))
-            event.widget["image"] = self.flgs[-1]
+            if event.widget["image"] == '':
+                flg_img = tkinter.PhotoImage(file = 'Flag.png')
+                self.flgs.append(flg_img.subsample(30, 30))
+                event.widget["image"] = self.flgs[-1]
+            else :
+                event.widget["image"] = ''
 
 
     def pushed_grid(self,x,y):
