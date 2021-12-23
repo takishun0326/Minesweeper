@@ -1,11 +1,10 @@
-from os import kill
 import tkinter
 from tkinter import ttk
 
 from Game import Game
 from functools import partial 
 
-WIDTH = 450
+WIDTH = 400
 HEIGHT = 400
 
 class Frame:
@@ -16,7 +15,7 @@ class Frame:
         self.flgs = []
         self.bombs = []
 
-        self.frame = tkinter.Frame(main_win, width=450, height=500)
+        self.frame = tkinter.Frame(main_win, width=WIDTH, height=HEIGHT)
         self.frame.pack()
 
         self.widgets()
@@ -38,10 +37,12 @@ class Frame:
     def put_flg(self,event):
         # gameがスタートしているか
         if self.game.is_gamestart:
+            # 旗を立てる
             if event.widget["image"] == '':
                 flg_img = tkinter.PhotoImage(file = 'Flag.png')
                 self.flgs.append(flg_img.subsample(30, 30))
                 event.widget["image"] = self.flgs[-1]
+            # 旗状態解除
             else :
                 event.widget["image"] = ''
 
@@ -80,6 +81,7 @@ class Frame:
 
     # widgets 準備
     def widgets(self):
+        
         self.buttons = []
         for i in range(20):
             button = []

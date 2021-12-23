@@ -3,6 +3,7 @@ import random
 class Game:
     def __init__(self):
         self.is_gamestart = False
+        self.number_of_mines = 0
 
     def gameStart(self, clicked_x, clicked_y):
 
@@ -27,16 +28,18 @@ class Game:
                     if rand <= per:
                         # per % の確率でヒットした座標を地雷にする(-1)
                         self.map[i][j] = -1
-                    
+        # 最初のマスと周囲のマスには絶対に地雷はない     
         for k in range(8):
             new_x = clicked_x+dx[k]
             new_y = clicked_y+dy[k]
             if (new_x>=0) and (new_x<20) and (new_y>=0) and (new_y<15):
-                print(new_x,new_y)
                 self.map[new_x][new_y] = 0
+        
+        # 地雷の数をカウント
+        for i in range(20):
+            self.number_of_mines += self.map[i].count(0)
+        
 
-                        
-        print (self.map)
 
         for i in range(20):
             for j in range(15):
@@ -49,7 +52,6 @@ class Game:
                                 # 地雷の数をカウント
                                 self.map[i][j] += 1
         
-        print(self.map)
                     
     # 押した場所から地雷0は全部開放する    
     def get_expandAreaPos(self, x, y):

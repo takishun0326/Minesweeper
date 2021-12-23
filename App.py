@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import ttk
 
-from Frame import Frame
+from Frame import Frame,FrameMaster
 
 WIDTH = 400
 HEIGHT = 400
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # Menu
 
     # Frame
-    Frame.Frame(main_win)
+    FrameMaster.FrameMaster(main_win)
 
 
 
