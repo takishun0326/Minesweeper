@@ -31,7 +31,7 @@ class Frame:
             self.buttons[i][j] = tkinter.Button(self.main_win, relief='sunken')
         else :    
             self.buttons[i][j] = tkinter.Button(self.main_win, text=num , relief='sunken')
-        self.buttons[i][j].place(x=20*i+100, y=20*j+100, width=20, height=20)
+        self.buttons[i][j].place(x=20*i, y=20*j+100, width=20, height=20)
         # print("pushed " + str(i) + str(j))
 
     # 右クリックで旗を置く
@@ -65,14 +65,13 @@ class Frame:
                     # 爆弾をすべて掘り起こす
                     for i in range(15):
                         for j in range(15):
+                            self.game.map_visit[i][j] = 1
                             if self.game.map[i][j] == -1:
-                                self.game.map_visit[i][j] = 1
                                 self.bombs.append(bomb_img.subsample(30, 30))
                                 self.buttons[i][j] = tkinter.Button(self.main_win, image = self.bombs[-1], relief='sunken')
-                                self.buttons[i][j].place(x=20*i+100, y=20*j+100, width=20, height=20)
+                                self.buttons[i][j].place(x=20*i, y=20*j+100, width=20, height=20)
 
-                else :
-                    # print(self.game.map[i][j])
+                elif self.game.map_visit[x][y] != 1 :  
                     expand_area_pos = self.game.get_expandAreaPos(x,y)
                     for pos in expand_area_pos:
                         self.disable_button(pos[0], pos[1], self.game.map[pos[0]][pos[1]])
@@ -97,4 +96,4 @@ class Frame:
     def position(self):
         for i in range(15):
             for j in range(15):
-                self.buttons[i][j].place(x=20*i+100, y=20*j+100, width=20, height=20)
+                self.buttons[i][j].place(x=20*i, y=20*j+100, width=20, height=20)
