@@ -1,5 +1,8 @@
 import random
 
+WIDTH = 400
+HEIGHT = 400
+
 class Game:
     def __init__(self):
         self.is_gamestart = False
@@ -11,8 +14,9 @@ class Game:
         dy = [1, 0, -1, 1, -1, 1, 0, -1]
 
         self.is_gamestart = True
+        self.is_gamefinish = False
         # Mine n%
-        per = 20
+        per = 2
 
         # map作成 15x15のすべて値が0, 訪れたマス状況
         self.map = [[0 for j in range(15)] for j in range(20)]
@@ -37,7 +41,7 @@ class Game:
         
         # 地雷の数をカウント
         for i in range(20):
-            self.number_of_mines += self.map[i].count(0)
+            self.number_of_mines += self.map[i].count(-1)
         
 
 
@@ -88,6 +92,14 @@ class Game:
                             result.append([new_x,new_y])
 
         return result
+
+    def is_game_clear(self):
+        visited = 0
+        
+        for i in range(20):
+            visited += self.map_visit[i].count(1)
+        print(visited, self.number_of_mines)
+        return 300 -visited == self.number_of_mines
 
         
 

@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from Game import Game
 from functools import partial 
+from Frame import Clock
 
 WIDTH = 400
 HEIGHT = 400
@@ -15,8 +16,10 @@ class Frame:
         self.flgs = []
         self.bombs = []
 
-        self.frame = tkinter.Frame(main_win, width=WIDTH, height=HEIGHT)
+        self.frame = tkinter.Frame(self.main_win, width=WIDTH, height=HEIGHT)
         self.frame.pack()
+
+        self.clock = Clock.Clock(self.main_win)
 
         self.widgets()
         self.position()
@@ -52,16 +55,24 @@ class Frame:
             # ゲームスタートしていないとき
             
             if not self.game.is_gamestart:
+                # Timer start
+                self.clock.start_timer()
+                # Map 生成
                 self.game.gameStart(x,y)
                 expand_area_pos = self.game.get_expandAreaPos(x,y)
                 for pos in expand_area_pos:
                     self.disable_button(pos[0], pos[1], self.game.map[pos[0]][pos[1]])
-            else :
-                # 爆弾をタッチしたら
+                       
+            
+            # 爆弾をタッチしたら
+            if self.game.map_visit[x][y] != 1 :
                 if self.game.map[x][y] == -1:
 
                     self.buttons[x][y].destroy()
                     bomb_img = tkinter.PhotoImage(file = 'Bomb.png')
+
+                    # Timer Stop
+                    self.clock.game_over()
 
                     # 爆弾をすべて掘り起こす
                     for i in range(20):
@@ -72,12 +83,22 @@ class Frame:
                                 self.buttons[i][j] = tkinter.Button(self.main_win, image = self.bombs[-1], relief='sunken')
                                 self.buttons[i][j].place(x=20*i, y=20*j+100, width=20, height=20)
 
-                elif self.game.map_visit[x][y] != 1 :  
+                else:  
                     expand_area_pos = self.game.get_expandAreaPos(x,y)
                     for pos in expand_area_pos:
                         self.disable_button(pos[0], pos[1], self.game.map[pos[0]][pos[1]])
+
+            # game clear  判定      
+            if self.game.is_game_clear():
+                # すべて訪れたことにする
+                for i in range(20):
+                    for j in range(15):
+                        self.game.map_visit[i][j] = 1
+                # Timer Stop
+                self.clock.game_clear()
                 
         return expanding_pushed_button
+
 
     # widgets 準備
     def widgets(self):
@@ -96,6 +117,7 @@ class Frame:
 
     # widgets 配置
     def position(self):
+
         for i in range(20):
             for j in range(15):
                 self.buttons[i][j].place(x=20*i, y=20*j+100, width=20, height=20)
