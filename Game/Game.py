@@ -16,7 +16,7 @@ class Game:
         self.is_gamestart = True
         self.is_gamefinish = False
         # Mine n%
-        per = 2
+        per = 20
 
         # map作成 15x15のすべて値が0, 訪れたマス状況
         self.map = [[0 for j in range(15)] for j in range(20)]
